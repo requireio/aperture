@@ -8,7 +8,6 @@
     "aperture": "./aperture.js"
   },
   "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughsk.io/)",
-  "private": true,
   "dependencies": {
     "flatten": "0.0.1",
     "once": "~1.3.0",
