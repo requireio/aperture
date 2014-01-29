@@ -1,0 +1,8 @@
+
+Usage:
+  $0 <command> [options]
+
+Commands:
+  link   Sets up the local links in the target directory
+  clean  Cleans up any module duplicates which should be
+         linked in the tree.
