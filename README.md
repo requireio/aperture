@@ -14,9 +14,9 @@ Usage:
   aperture <command> [options]
 
 Commands:
-  link   Sets up the local links in the target directory
-  clean  Cleans up any module duplicates which should be
-         linked in the tree.
+  link   Sets up the local links in the target directory.
+  purge  Permanently removes any module duplicates which
+         should be linked in the tree.
 
 Options:
   -d, --cwd  Target a different directory for this command.
