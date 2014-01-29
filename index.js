@@ -13,7 +13,6 @@ var path = require('path')
 var fs = require('fs')
 
 var globCache = {}
-var configs = {}
 var globopts = {
     dot: false
   , mark: true
@@ -23,18 +22,21 @@ var globopts = {
   , noglobstar: true
 }
 
-link = configify(link)
-purge = configify(purge)
+link = packageConfigify(link)
+purge = packageConfigify(purge)
 
 module.exports = link
 module.exports.link = link
 module.exports.purge = purge
 
-function configify(fn) {
+// Wraps up the exported functions
+// to automatically acquire configuration
+// via the "aperture" key in package.json.
+function packageConfigify(fn) {
   return function(dir, next) {
     var emitter = new EventEmitter
 
-    config(dir, function(err, config, root) {
+    packageConfig(dir, function(err, config, root) {
       if (err) return next(err)
       fn(root, config, emitter, next)
     })
@@ -43,7 +45,37 @@ function configify(fn) {
   }
 }
 
-function resolve(dir, config, send) {
+// Given current directory `dir`, find
+// the nearest package.json by searching up
+// the directory tree, and pass back the contents
+// of "aperture".
+var pkgs = {}
+function packageConfig(dir, next) {
+  dir = path.resolve(dir)
+
+  if (pkgs[dir]) {
+    return next(null, pkgs[dir])
+  }
+
+  findup(dir, 'package.json', function(err, root) {
+    if (err) return next(err)
+    if (!root) return next(new Error(
+      'Could not find a package.json from "'+dir+'"'
+    ))
+
+    var pkgPath = path.resolve(root, 'package.json')
+    var pkg = require(pkgPath)
+    pkgs[dir] = pkg && pkg.aperture || {}
+
+    next(null, pkgs[dir], root)
+  })
+}
+
+// Resolves the "sources", i.e. development modules
+// that you want to have symlinked, by flattening
+// the globs in the array "aperture.sources" inside
+// package.json.
+function resolveSourceModules(dir, config, send) {
   send = send || throwup
 
   if (!config) return send(new Error(
@@ -86,12 +118,14 @@ function resolve(dir, config, send) {
   })
 }
 
+// The "aperture link" command. Resolves and creates
+// the appropriate symlinks.
 function link(dir, config, events, send) {
   send = send || throwup
 
   var node_modules = path.resolve(dir, 'node_modules')
 
-  resolve(dir, config, function(err, sources) {
+  resolveSourceModules(dir, config, function(err, sources) {
     var done = once(function(err) {
       send(err, sources)
     })
@@ -114,27 +148,10 @@ function link(dir, config, events, send) {
   })
 }
 
-function config(dir, next) {
-  dir = path.resolve(dir)
-
-  if (configs[dir]) {
-    return next(null, configs[dir])
-  }
-
-  findup(dir, 'package.json', function(err, root) {
-    if (err) return next(err)
-    if (!root) return next(new Error(
-      'Could not find a package.json from "'+dir+'"'
-    ))
-
-    next(null, configs[dir] = require(
-      path.resolve(root, 'package.json')
-    ).aperture, root)
-  })
-}
-
+// For each of the symlinked modules, remove any copies
+// found deeper in the dependency tree.
 function purge(dir, config, events, send) {
-  resolve(dir, config, function(err, sources) {
+  resolveSourceModules(dir, config, function(err, sources) {
     var queue = []
 
     var names = sources.map(function(source) {
