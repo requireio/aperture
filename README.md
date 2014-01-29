@@ -7,6 +7,9 @@ in `node_modules` for a single project.
 
 ``` bash
 npm install -g requireio/aperture
+# or:
+npmrc anu &&
+npm install -g aperture
 ```
 
 ```
