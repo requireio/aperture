@@ -17,13 +17,17 @@ Usage:
   aperture <command> [options]
 
 Commands:
-  link   Sets up the local links in the target directory.
-  purge  Permanently removes any module duplicates which
-         should be linked in the tree.
+  link    Sets up the local links in the target directory.
+  list    Lists the modules configured to be linked.
+  bulk    Runs a shell command from each linked module.
+  config  Print out the current config being used.
+  purge   Permanently removes any module duplicates which should
+          be linked in the tree.
 
 Options:
-  -d, --cwd  Target a different directory for this command.
-             Default: current directory
+  -v, --version  Output the current version and exit
+  -d, --cwd      Target a different directory for this command.
+                 Default: current directory
 ```
 
 ### package.json ###
@@ -88,3 +92,40 @@ directory you should make sure all your changes have been checked in properly.
 
 After that, it should be set up, and you just need to run `aperture link`
 every time a new dependency has been added.
+
+### aperture list ###
+
+You can list all of the module directories that should be linked locally using
+this command:
+
+``` bash
+$ aperture list
+/Users/hughsk/Desktop/repos/webmango/features/config
+/Users/hughsk/Desktop/repos/webmango/features/credentials
+/Users/hughsk/Desktop/repos/webmango/features/mango-view
+/Users/hughsk/Desktop/repos/webmango/features/progress
+/Users/hughsk/Desktop/repos/webmango/features/result-preview
+/Users/hughsk/Desktop/repos/webmango/mango-link/client
+/Users/hughsk/Desktop/repos/webmango/mango-link/server
+/Users/hughsk/Desktop/repos/webmango/utils/ajax-data
+/Users/hughsk/Desktop/repos/webmango/utils/custom-element
+/Users/hughsk/Desktop/repos/webmango/utils/polyfill-webcomponents
+/Users/hughsk/Desktop/repos/webmango/utils/render-template
+/Users/hughsk/Desktop/repos/webmango/utils/selenish
+/Users/hughsk/Desktop/repos/webmango/utils/xml-node-prefix
+```
+
+### aperture config ###
+
+Quickly print out the project's current config using this command:
+
+``` bash
+$ aperture config
+{
+  "sources": [
+    "utils/*",
+    "features/*",
+    "mango-link/*"
+  ]
+}
+```
