@@ -1,0 +1,8 @@
+{
+  "aperture": {
+    "foundme": true,
+    "sources": [
+      "./utils-*/*"
+    ]
+  }
+}
