@@ -8,8 +8,9 @@
 // aperture bulk -- rm -rf node_modules
 // aperture bulk -- npm publish
 
-var spawn   = require('child_process').spawn
-var series  = require('async-series')
+var EventEmitter = require('events').EventEmitter
+var spawn        = require('child_process').spawn
+var series       = require('async-series')
 
 var list    = require('./list')
 
@@ -18,6 +19,8 @@ module.exports = bulk
 function bulk(root, config, events, done) {
   var cmd = config.bulk.command
   var arg = config.bulk.args
+
+  if (!events) events = new EventEmitter
 
   list(root, config, function(err, modules) {
     if (err) return done(err)

@@ -6,20 +6,23 @@
 // after performing a new install at any level
 // in your project's dependency tree.
 
-var basename = require('path').basename
-var dirname  = require('path').dirname
-var map      = require('map-async')
-var readdirp = require('readdirp')
-var through2 = require('through2')
-var rimraf   = require('rimraf')
-var pluck    = require('pluck')
-var once     = require('once')
+var EventEmitter = require('events').EventEmitter
+var basename     = require('path').basename
+var dirname      = require('path').dirname
+var map          = require('map-async')
+var readdirp     = require('readdirp')
+var through2     = require('through2')
+var rimraf       = require('rimraf')
+var pluck        = require('pluck')
+var once         = require('once')
 
-var list     = require('./list')
+var list         = require('./list')
 
 module.exports = purge
 
 function purge(root, config, events, done) {
+  if (!events) events = new EventEmitter
+
   list(root, config, function(err, modules) {
     if (err) return done(err)
 

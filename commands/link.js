@@ -5,20 +5,23 @@
 // This is done without using npm link directly,
 // and as such any links made are not global.
 
-var resolve = require('path').resolve
-var dirname = require('path').dirname
-var map     = require('map-async')
-var mkdirp  = require('mkdirp')
-var rimraf  = require('rimraf')
-var once    = require('once')
-var fs      = require('fs')
+var EventEmitter = require('events').EventEmitter
+var resolve      = require('path').resolve
+var dirname      = require('path').dirname
+var map          = require('map-async')
+var mkdirp       = require('mkdirp')
+var rimraf       = require('rimraf')
+var once         = require('once')
+var fs           = require('fs')
 
-var list    = require('./list')
+var list         = require('./list')
 
 module.exports = link
 
 function link(root, config, events, done) {
   var node_modules = resolve(root, 'node_modules')
+
+  if (!events) events = new EventEmitter
 
   list(root, config, function(err, modules) {
     if (err) return done(err)
