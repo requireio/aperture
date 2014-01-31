@@ -4,7 +4,7 @@ var setup    = require('./setup')
 var test = require('tape')
 var fs   = require('fs')
 
-test('lists the expected module names', setup(function(t, done) {
+test('list: returns the expected module names', setup(function(t, done) {
   var root = t.directory
 
   aperture.config(root, function(err, config) {
