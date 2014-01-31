@@ -1,6 +1,6 @@
 {
   "name": "aperture",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local dependencies helper",
   "main": "aperture.js",
   "scripts": {},
