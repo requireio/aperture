@@ -46,12 +46,34 @@ e.g.:
 Where `aperture.sources` should be an array of package directories – globs are
 supported too.
 
+### aperture link ###
+
 Now, to symlink these directories to the top-level, just run this for your
 project's root:
 
 ``` bash
 aperture link
 ```
+
+### aperture bulk ###
+
+If you've just cloned the project repo, you probably don't want to visit
+each local dependency to get `npm install` or any other setup commands running.
+This is easily fixed with `aperture bulk`, which runs your chosen command from
+each source's directory:
+
+``` bash
+# Install dependencies for all of the local modules
+# defined in "aperture.sources"
+aperture bulk npm install
+
+# Remove the currently installed node_modules
+# folder for each local module. Note the use of --
+# to allow for the -rf flags.
+aperture bulk -- rm -rf node_modules
+```
+
+### aperture purge ###
 
 The last remaining thing to do is remove any other dependencies or symlinks
 hidden in the tree that might conflict with your new top-level ones:

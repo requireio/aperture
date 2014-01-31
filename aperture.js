@@ -50,4 +50,8 @@ function defineCommands() {
         console.log(file)
       })
   }
+
+  commands.bulk = function(done) {
+    aperture.bulk(argv.cwd, done)
+  }
 }

@@ -1,4 +1,6 @@
 var EventEmitter = require('events').EventEmitter
+var spawn = require('child_process').spawn
+var series = require('async-series')
 var through = require('through2')
 var readdir = require('readdirp')
 var flatten = require('flatten')
@@ -23,10 +25,12 @@ var globopts = {
 }
 
 link = packageConfigify(link)
+bulk = packageConfigify(bulk)
 purge = packageConfigify(purge)
 
 module.exports = link
 module.exports.link = link
+module.exports.bulk = bulk
 module.exports.purge = purge
 
 // Wraps up the exported functions
@@ -193,6 +197,34 @@ function purge(dir, config, events, send) {
         return send(err)
       }))
     }
+  })
+}
+
+function bulk(dir, config, events, send) {
+  resolveSourceModules(dir, config, function(err, sources) {
+    if (err) return send(err)
+
+    series(sources.map(function(source) {
+      return function(done) {
+        var cwd = source.dir
+        var cmd = process.argv[3]
+        var arg = process.argv.slice(4)
+
+        var ps = spawn(cmd, arg, {
+            cwd: cwd
+          , env: process.env
+        })
+
+        ps.stdout.pipe(process.stdout)
+        ps.stderr.pipe(process.stderr)
+        ps.on('exit', function(code) {
+          return done(code !== 0
+            ? new Error('Invalid exit code: ' + code)
+            : null
+          )
+        })
+      }
+    }), send)
   })
 }
 
