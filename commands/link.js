@@ -46,6 +46,6 @@ function link(root, config, events, done) {
         fs.symlink(src, dst, next)
         events.emit('link', src, dst)
       }
-    })
+    }, done)
   })
 }
