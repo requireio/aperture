@@ -17,6 +17,7 @@ Usage:
   aperture <command> [options]
 
 Commands:
+  init    links, installs and purges your dependencies for fresh projects
   link    Sets up the local links in the target directory.
   list    Lists the modules configured to be linked.
   bulk    Runs a shell command from each linked module.
@@ -49,6 +50,22 @@ e.g.:
 
 Where `aperture.sources` should be an array of package directories – globs are
 supported too.
+
+### aperture init ###
+
+Provided the configuration has been set up correctly, you can run
+this command to set up the dependencies for a fresh project. Essentially,
+it's the equivalent of this:
+
+``` bash
+aperture link &&
+aperture bulk -- npm install --color=always &&
+aperture purge
+```
+
+But is none-the-less included for convenience. For more flexibility and faster
+updates after the initial setup, the commands that follow are likely to be
+useful.
 
 ### aperture link ###
 
