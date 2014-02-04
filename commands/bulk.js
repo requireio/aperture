@@ -27,10 +27,13 @@ function bulk(root, config, events, done) {
 
     series(modules.map(function(mod) {
       return function(next) {
+        var cwd = mod.directory
         var ps = spawn(cmd, arg, {
-            cwd: mod.directory
+            cwd: cwd
           , env: process.env
         })
+
+        events.emit('spawn', cwd, cmd, arg)
 
         ps.stdout.pipe(process.stdout)
         ps.stderr.pipe(process.stderr)

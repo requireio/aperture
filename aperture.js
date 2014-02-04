@@ -4,6 +4,7 @@ var EventEmitter = require('events').EventEmitter
 var config       = require('./commands/config')
 var resolve      = require('path').resolve
 var optimist     = require('optimist')
+var chalk        = require('chalk')
 var fs           = require('fs')
 var commands     = {}
 
@@ -83,6 +84,29 @@ function defineCommands() {
     ))
 
     require('./commands/bulk')(
+        root
+      , config
+      , events
+      , done
+    )
+  }
+
+  commands.init = function(root, config, events, done) {
+    var prefix = chalk.green('aperture')
+
+    events.on('link', function(mod) {
+      console.log(prefix, chalk.magenta('linking module'), mod)
+    })
+
+    events.on('queued', function(mod) {
+      console.log(prefix, chalk.magenta('removing duplicate'), mod)
+    })
+
+    events.on('spawn', function(cwd, cmd, args) {
+      console.log(prefix, chalk.magenta('spawning'), cmd, args, chalk.grey(cwd))
+    })
+
+    require('./commands/init')(
         root
       , config
       , events
