@@ -1,1 +1,3 @@
 node_modules
+!test-fixtures/node_modules_source/node_modules
+.DS_Store

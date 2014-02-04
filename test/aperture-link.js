@@ -30,6 +30,36 @@ test('link: creates the correct symlinks', setup(function(t, done) {
   })
 }))
 
+test('link: no symlinks on node_modules sources', setup('node_modules_source', function(t, done) {
+  var root = t.directory
+  var node_modules = path.join(root, 'node_modules')
+
+  aperture.config(root, function(err, config) {
+    t.ifError(err, 'got config without error')
+
+    aperture.link(root, config, null, function(err) {
+      t.ifError(err, 'linked without error')
+
+      ;['node_modules/module-a'
+      , 'node_modules/module-b'
+      , 'node_modules/module-c'
+      , 'node_modules/module-d'
+      ].map(function(module) {
+        var stats = fs.statSync(
+          path.resolve(root, module)
+        )
+
+        t.notOk(stats.isSymbolicLink(), 'Not a symbolic link')
+        t.ok(stats.isDirectory(), 'Still a directory')
+      })
+
+      done(function() {
+        t.end()
+      })
+    })
+  })
+}))
+
 test('link: able to require from root directory',  requireFrom('index.js'))
 test('link: able to require from group directory', requireFrom('utils-1/index.js'))
 test('link: able to require from child modules',   requireFrom('utils-1/module-a/secondary.js'))

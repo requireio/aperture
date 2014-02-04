@@ -32,7 +32,10 @@ function link(root, config, events, done) {
 
     map(modules, function(mod, i, next) {
       var dst = resolve(node_modules, mod.name)
-      var src = mod.directory
+      var src = resolve(mod.directory)
+
+      // don't use self-directed symlinks
+      if (dst === src) return next(null)
 
       rimraf(dst, createDirectory)
 
