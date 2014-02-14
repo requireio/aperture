@@ -15,6 +15,7 @@ var argv = optimist
 
   .describe('v', 'Output the current version and exit')
   .alias('v', 'version')
+  .boolean('v')
 
   .describe('d', 'Target a different directory for this command. Default: current directory')
   .alias('d', 'cwd')
