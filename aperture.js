@@ -9,7 +9,7 @@ var fs           = require('fs')
 var commands     = {}
 
 var argv = optimist
-  .describe('b', 'Exit early on reaching an error during "aperutre bulk".')
+  .describe('b', 'Exit early on reaching an error during "aperture bulk".')
   .alias('b', 'bail')
   .boolean('b')
 

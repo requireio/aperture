@@ -26,7 +26,7 @@ Commands:
           be linked in the tree.
 
 Options:
-  -b, --bail     Exit early on reaching an error during "aperutre bulk".
+  -b, --bail     Exit early on reaching an error during "aperture bulk".
   -v, --version  Output the current version and exit
   -d, --cwd      Target a different directory for this command.
                  Default: current directory
