@@ -9,6 +9,10 @@ var fs           = require('fs')
 var commands     = {}
 
 var argv = optimist
+  .describe('b', 'Exit early on reaching an error during "aperutre bulk".')
+  .alias('b', 'bail')
+  .boolean('b')
+
   .describe('v', 'Output the current version and exit')
   .alias('v', 'version')
 
@@ -73,9 +77,13 @@ function defineCommands() {
   }
 
   commands.bulk = function(root, config, events, done) {
+    config.bail = 'bail' in argv
+      ? argv.bail
+      : config.bail
+
     config.bulk = {
-        command: process.argv[3]
-      , args: process.argv.slice(4)
+        command: argv._[0]
+      , args: argv._.slice(1)
     }
 
     if (!config.bulk.command) return done(new Error(

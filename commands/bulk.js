@@ -38,7 +38,7 @@ function bulk(root, config, events, done) {
         ps.stdout.pipe(process.stdout)
         ps.stderr.pipe(process.stderr)
         ps.once('exit', function(code) {
-          return next(code !== 0
+          return next(config.bail && code !== 0
             ? new Error('Invalid exit code: ' + code)
             : null
           )

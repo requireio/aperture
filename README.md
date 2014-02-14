@@ -26,6 +26,7 @@ Commands:
           be linked in the tree.
 
 Options:
+  -b, --bail     Exit early on reaching an error during "aperutre bulk".
   -v, --version  Output the current version and exit
   -d, --cwd      Target a different directory for this command.
                  Default: current directory
@@ -92,6 +93,23 @@ aperture bulk npm install
 # folder for each local module. Note the use of --
 # to allow for the -rf flags.
 aperture bulk -- rm -rf node_modules
+```
+
+By default, each script will run whether or not the previous one executed
+successfully. You can change this behavior using the `--bail` flag:
+
+``` bash
+$ aperture bulk --bail -- bash -c 'echo hello && exit 1'
+hello
+
+/Users/hughsk/Desktop/repos/aperture/aperture.js:44
+      if (err) throw err
+                     ^
+Error: Invalid exit code: 1
+    at ChildProcess.<anonymous> (/Users/hughsk/Desktop/repos/aperture/commands/bulk.js:42:47)
+    at ChildProcess.g (events.js:175:14)
+    at ChildProcess.EventEmitter.emit (events.js:98:17)
+    at Process.ChildProcess._handle.onexit (child_process.js:789:12)
 ```
 
 ### aperture purge ###
