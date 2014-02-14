@@ -103,7 +103,7 @@ function defineCommands() {
     )
   }
 
-  commands.init = function(root, config, events, done) {
+  commands.open = function(root, config, events, done) {
     var prefix = chalk.green('aperture')
 
     events.on('link', function(mod) {
@@ -118,7 +118,7 @@ function defineCommands() {
       console.log(prefix, chalk.magenta('spawning'), cmd, args, chalk.grey(cwd))
     })
 
-    require('./commands/init')(
+    require('./commands/open')(
         root
       , config
       , events

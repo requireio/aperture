@@ -3,7 +3,7 @@ Usage:
   $0 <command> [options]
 
 Commands:
-  init    links, installs and purges your dependencies for fresh projects
+  open    links, installs and purges your dependencies for fresh projects
   link    Sets up the local links in the target directory.
   list    Lists the modules configured to be linked.
   bulk    Runs a shell command from each linked module.
