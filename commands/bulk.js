@@ -32,6 +32,11 @@ function bulk(root, config, events, done) {
         var ps = spawn(cmd, arg, {
             cwd: cwd
           , env: process.env
+        }).once('error', function(e) {
+          if (e.code === 'ENOENT')
+            e.message += ': Command "'+cmd+'" not found'
+
+          return done(e)
         })
 
         events.emit('spawn', cwd, cmd, arg)
