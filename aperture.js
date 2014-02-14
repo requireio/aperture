@@ -95,7 +95,10 @@ function defineCommands() {
         root
       , config
       , events
-      , done
+      , function(err, info) {
+        if (err) throw err
+        if (info.failed.length) process.exit(1)
+      }
     )
   }
 

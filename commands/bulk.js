@@ -19,6 +19,7 @@ module.exports = bulk
 function bulk(root, config, events, done) {
   var cmd = config.bulk.command
   var arg = config.bulk.args
+  var failed = []
 
   if (!events) events = new EventEmitter
 
@@ -38,12 +39,18 @@ function bulk(root, config, events, done) {
         ps.stdout.pipe(process.stdout)
         ps.stderr.pipe(process.stderr)
         ps.once('exit', function(code) {
+          if (code !== 0) failed.push(cwd)
+
           return next(config.bail && code !== 0
             ? new Error('Invalid exit code: ' + code)
             : null
           )
         })
       }
-    }), done)
+    }), function(err) {
+      return done(err, {
+        failed: failed
+      })
+    })
   })
 }
