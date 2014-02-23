@@ -125,19 +125,13 @@ this command:
 
 ``` bash
 $ aperture list
-/Users/hughsk/Desktop/repos/webmango/features/config
-/Users/hughsk/Desktop/repos/webmango/features/credentials
-/Users/hughsk/Desktop/repos/webmango/features/mango-view
-/Users/hughsk/Desktop/repos/webmango/features/progress
-/Users/hughsk/Desktop/repos/webmango/features/result-preview
-/Users/hughsk/Desktop/repos/webmango/mango-link/client
-/Users/hughsk/Desktop/repos/webmango/mango-link/server
-/Users/hughsk/Desktop/repos/webmango/utils/ajax-data
-/Users/hughsk/Desktop/repos/webmango/utils/custom-element
-/Users/hughsk/Desktop/repos/webmango/utils/polyfill-webcomponents
-/Users/hughsk/Desktop/repos/webmango/utils/render-template
-/Users/hughsk/Desktop/repos/webmango/utils/selenish
-/Users/hughsk/Desktop/repos/webmango/utils/xml-node-prefix
+/Users/hughsk/myproject/features/config
+/Users/hughsk/myproject/features/credentials
+/Users/hughsk/myproject/features/progress
+/Users/hughsk/myproject/utils/ajax-data
+/Users/hughsk/myproject/utils/custom-element
+/Users/hughsk/myproject/utils/polyfill-webcomponents
+/Users/hughsk/myproject/utils/render-template
 ```
 
 ### aperture config ###
@@ -149,8 +143,7 @@ $ aperture config
 {
   "sources": [
     "utils/*",
-    "features/*",
-    "mango-link/*"
+    "features/*"
   ]
 }
 ```
