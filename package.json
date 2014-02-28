@@ -26,9 +26,6 @@
     "pluck": "0.0.4",
     "chalk": "~0.4.0"
   },
-  "publishConfig": {
-    "registry": "http://localhost:8889/"
-  },
   "devDependencies": {
     "directory-copy": "~0.1.0",
     "quick-tmp": "0.0.0",
