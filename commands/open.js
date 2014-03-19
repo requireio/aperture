@@ -13,6 +13,7 @@ function init(root, config, events, done) {
       , args: [
           'install'
         , '--color=always'
+        , '--production'
       ]
     }
 
