@@ -77,6 +77,22 @@ function defineCommands() {
     )
   }
 
+  commands.isntall =
+  commands.install = function(root, config, events, done) {
+    console.log('checking package versions...')
+
+    require('./commands/install')(
+        root
+      , config
+      , events.on('info progress', function(p) {
+        process.stdout.write(((p * 100)|0) + '%    \r')
+      }).on('spawn', function(cwd, cmd, args) {
+        console.log(chalk.magenta('spawning'), cmd, args, chalk.grey(cwd))
+      })
+      , done
+    )
+  }
+
   commands.bulk = function(root, config, events, done) {
     config.bail = 'bail' in argv
       ? argv.bail
@@ -116,6 +132,14 @@ function defineCommands() {
 
     events.on('spawn', function(cwd, cmd, args) {
       console.log(prefix, chalk.magenta('spawning'), cmd, args, chalk.grey(cwd))
+    })
+
+    events.once('info progress', function(p) {
+      console.log(chalk.magenta('checking registry'))
+    }).on('info progress', function(p) {
+      process.stdout.write(chalk.green('progress: '))
+      process.stdout.write(String((p * 100)|0))
+      process.stdout.write('%      \r')
     })
 
     require('./commands/open')(

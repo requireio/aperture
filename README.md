@@ -14,13 +14,15 @@ Usage:
   aperture <command> [options]
 
 Commands:
-  init    links, installs and purges your dependencies for fresh projects
-  link    Sets up the local links in the target directory.
-  list    Lists the modules configured to be linked.
-  bulk    Runs a shell command from each linked module.
-  config  Print out the current config being used.
-  purge   Permanently removes any module duplicates which should
-          be linked in the tree.
+  open     links, installs and purges your dependencies for fresh projects.
+  link     Sets up the local links in the target directory.
+  list     Lists the modules configured to be linked.
+  bulk     Runs a shell command from each linked module.
+  install  Intelligently install your node dependencies for local development.
+  config   Print out the current config being used.
+  purge    Permanently removes any module duplicates which should
+           be linked in the tree.
+
 
 Options:
   -b, --bail     Exit early on reaching an error during "aperture bulk".
@@ -101,6 +103,23 @@ hello
 
 Error: Invalid exit code: 1
 ```
+
+### aperture install ###
+
+In practice, `aperture bulk npm install` works, but can take *a long time*
+when projects share a lot of common dependencies. The `install` command is
+a little smarter about this, and will install each linked module's dependencies
+for you in a way that minimises duplicate packages.
+
+Essentially, aperture will build a list of the dependencies required for each
+project and their expected version. For each dependency:
+
+* Check if all of the versions are compatible, and if so install them once
+  in the root directory, alongside your linked modules.
+* Otherwise, install that module as normal.
+
+This can result in significant speedups (and a smaller `node_modules` folder)
+for installs when working on larger projects.
 
 ### aperture purge ###
 
