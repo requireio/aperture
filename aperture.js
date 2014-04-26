@@ -56,6 +56,7 @@ function help() {
 }
 
 function defineCommands() {
+  commands.ln =
   commands.link = function(root, config, events, done) {
     aperture.link(
         root
@@ -69,6 +70,7 @@ function defineCommands() {
     }
   }
 
+  commands.dedupe =
   commands.purge = function(root, config, events, done) {
     aperture.purge(
         root
@@ -94,6 +96,7 @@ function defineCommands() {
     )
   }
 
+  commands.each =
   commands.bulk = function(root, config, events, done) {
     config.bail = 'bail' in argv
       ? argv.bail
@@ -120,6 +123,7 @@ function defineCommands() {
     )
   }
 
+  commands.init =
   commands.open = function(root, config, events, done) {
     var prefix = chalk.green('aperture')
 
@@ -155,6 +159,7 @@ function defineCommands() {
     console.log(require('./package.json').version)
   }
 
+  commands.ls =
   commands.list = function(root, config, events, done) {
     aperture.list(
         root
