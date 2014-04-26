@@ -34,5 +34,26 @@
     "quick-tmp": "0.0.0",
     "tape": "~2.4.0",
     "faucet": "0.0.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/requireio/aperture.git"
+  },
+  "keywords": [
+    "npm",
+    "link",
+    "require",
+    "development",
+    "dev",
+    "install",
+    "dependency"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/requireio/aperture/issues"
+  },
+  "homepage": "https://github.com/requireio/aperture"
 }
