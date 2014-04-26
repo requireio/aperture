@@ -28,7 +28,7 @@ var semver = require('semver')
 var pluck  = require('pluck')
 var path   = require('path')
 
-var spawnNpm = require('../lib/spawn-npm')
+var npmInstall = require('../lib/npm-install')
 var list     = require('./list')
 
 module.exports = install
@@ -105,7 +105,7 @@ function install(root, config, events, done) {
       if (err) return done(err)
 
       installables = installables.filter(Boolean)
-      spawnNpm(root, installables.map(function(module) {
+      npmInstall(root, installables.map(function(module) {
         return module.name + '@' + module.best
       }), events).once('exit', function() {
         installRemaining(modules)
@@ -147,7 +147,7 @@ function install(root, config, events, done) {
         ))
       }
 
-      spawnNpm(
+      npmInstall(
           module.directory
         , toInstall
         , events

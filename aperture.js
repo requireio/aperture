@@ -48,7 +48,7 @@ config(cwd, function(err, config) {
 function help() {
   var usage = fs.readFileSync(
     __dirname + '/usage.txt', 'utf8'
-  ).slice(0, -1)
+  ).trim()
 
   optimist
     .usage(usage)
