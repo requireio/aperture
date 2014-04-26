@@ -5,6 +5,7 @@ var config       = require('./commands/config')
 var resolve      = require('path').resolve
 var optimist     = require('optimist')
 var chalk        = require('chalk')
+var aperture     = require('./')
 var fs           = require('fs')
 var commands     = {}
 
@@ -56,7 +57,7 @@ function help() {
 
 function defineCommands() {
   commands.link = function(root, config, events, done) {
-    require('./commands/link')(
+    aperture.link(
         root
       , config
       , events.on('link', log)
@@ -69,7 +70,7 @@ function defineCommands() {
   }
 
   commands.purge = function(root, config, events, done) {
-    require('./commands/purge')(
+    aperture.purge(
         root
       , config
       , events.on('queued', console.log)
@@ -81,7 +82,7 @@ function defineCommands() {
   commands.install = function(root, config, events, done) {
     console.log('checking package versions...')
 
-    require('./commands/install')(
+    aperture.install(
         root
       , config
       , events.on('info progress', function(p) {
@@ -108,7 +109,7 @@ function defineCommands() {
       'command object.'
     ))
 
-    require('./commands/bulk')(
+    aperture.bulk(
         root
       , config
       , events
@@ -142,7 +143,7 @@ function defineCommands() {
       process.stdout.write('%      \r')
     })
 
-    require('./commands/open')(
+    aperture.open(
         root
       , config
       , events
@@ -155,7 +156,7 @@ function defineCommands() {
   }
 
   commands.list = function(root, config, events, done) {
-    require('./commands/list')(
+    aperture.list(
         root
       , config
       , function(err, modules) {
