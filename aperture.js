@@ -47,7 +47,7 @@ config(cwd, function(err, config) {
 function help() {
   var usage = fs.readFileSync(
     __dirname + '/usage.txt', 'utf8'
-  ).slice(0, -1)
+  ).trim()
 
   optimist
     .usage(usage)
@@ -55,7 +55,9 @@ function help() {
 }
 
 function defineCommands() {
+  commands.ln =
   commands.link = function(root, config, events, done) {
+    // require commands directly to shave startup time.
     require('./commands/link')(
         root
       , config
@@ -68,6 +70,7 @@ function defineCommands() {
     }
   }
 
+  commands.dedupe =
   commands.purge = function(root, config, events, done) {
     require('./commands/purge')(
         root
@@ -80,7 +83,6 @@ function defineCommands() {
   commands.isntall =
   commands.install = function(root, config, events, done) {
     console.log('checking package versions...')
-
     require('./commands/install')(
         root
       , config
@@ -93,6 +95,7 @@ function defineCommands() {
     )
   }
 
+  commands.each =
   commands.bulk = function(root, config, events, done) {
     config.bail = 'bail' in argv
       ? argv.bail
@@ -119,6 +122,7 @@ function defineCommands() {
     )
   }
 
+  commands.init =
   commands.open = function(root, config, events, done) {
     var prefix = chalk.green('aperture')
 
@@ -154,6 +158,7 @@ function defineCommands() {
     console.log(require('./package.json').version)
   }
 
+  commands.ls =
   commands.list = function(root, config, events, done) {
     require('./commands/list')(
         root
