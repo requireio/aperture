@@ -5,7 +5,6 @@ var config       = require('./commands/config')
 var resolve      = require('path').resolve
 var optimist     = require('optimist')
 var chalk        = require('chalk')
-var aperture     = require('./')
 var fs           = require('fs')
 var commands     = {}
 
@@ -58,7 +57,8 @@ function help() {
 function defineCommands() {
   commands.ln =
   commands.link = function(root, config, events, done) {
-    aperture.link(
+    // require commands directly to shave startup time.
+    require('./commands/link')(
         root
       , config
       , events.on('link', log)
@@ -72,7 +72,7 @@ function defineCommands() {
 
   commands.dedupe =
   commands.purge = function(root, config, events, done) {
-    aperture.purge(
+    require('./commands/purge')(
         root
       , config
       , events.on('queued', console.log)
@@ -83,8 +83,7 @@ function defineCommands() {
   commands.isntall =
   commands.install = function(root, config, events, done) {
     console.log('checking package versions...')
-
-    aperture.install(
+    require('./commands/install')(
         root
       , config
       , events.on('info progress', function(p) {
@@ -112,7 +111,7 @@ function defineCommands() {
       'command object.'
     ))
 
-    aperture.bulk(
+    require('./commands/bulk')(
         root
       , config
       , events
@@ -147,7 +146,7 @@ function defineCommands() {
       process.stdout.write('%      \r')
     })
 
-    aperture.open(
+    require('./commands/open')(
         root
       , config
       , events
@@ -161,7 +160,7 @@ function defineCommands() {
 
   commands.ls =
   commands.list = function(root, config, events, done) {
-    aperture.list(
+    require('./commands/list')(
         root
       , config
       , function(err, modules) {
