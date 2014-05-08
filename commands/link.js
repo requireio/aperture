@@ -6,6 +6,7 @@
 // and as such any links made are not global.
 
 var EventEmitter = require('events').EventEmitter
+var relative     = require('path').relative
 var resolve      = require('path').resolve
 var dirname      = require('path').dirname
 var map          = require('map-async')
@@ -46,7 +47,18 @@ function link(root, config, events, done) {
 
       function linkModule(err) {
         if (err) return next(err)
-        fs.symlink(src, dst, next)
+
+        dst = resolve(dst)
+        var target = src = resolve(src)
+        if (process.platform !== "win32") {
+          // junctions on windows must be absolute
+          target = relative(dirname(dst), src)
+          // if there is no folder in common, then it will be much
+          // longer, and using a relative link is dumb.
+          if (target.length >= src.length) target = src
+        }
+
+        fs.symlink(target, dst, next)
         events.emit('link', src, dst)
       }
     }, done)
