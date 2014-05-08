@@ -58,8 +58,11 @@ function link(root, config, events, done) {
           if (target.length >= src.length) target = src
         }
 
-        fs.symlink(target, dst, next)
-        events.emit('link', src, dst)
+        fs.stat(src, function(err) {
+          if (err) return next(err)
+          fs.symlink(target, dst, next)
+          events.emit('link', src, dst)
+        })
       }
     }, done)
   })
