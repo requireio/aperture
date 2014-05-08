@@ -6,7 +6,7 @@ in `node_modules` for a single project.
 ## Usage ##
 
 ``` bash
-npm install -g requireio/aperture
+npm install -g aperture
 ```
 
 ```
