@@ -60,7 +60,7 @@ function link(root, config, events, done) {
 
         fs.stat(src, function(err) {
           if (err) return next(err)
-          fs.symlink(target, dst, next)
+          fs.symlink(target, dst, "junction", next)
           events.emit('link', src, dst)
         })
       }
