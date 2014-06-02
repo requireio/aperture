@@ -37,10 +37,17 @@ function config(directory, done) {
     var pkg = require(pkgPath)
 
     pkg = pkg && pkg.aperture || {}
-
+    pkg = normalize(pkg)
     cache[root] = pkg
     cache[directory] = pkg
 
     done(null, pkg, root)
   }
+}
+
+function normalize(aperture) {
+  if (typeof aperture == 'string') return {sources: [aperture]}
+  if (Array.isArray(aperture) == 'string') return {sources: aperture}
+  if (aperture.sources) return aperture
+  return {sources: []}
 }
