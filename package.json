@@ -4,7 +4,7 @@
   "description": "Local dependencies helper",
   "main": "index.js",
   "scripts": {
-    "test": "faucet test/*.js"
+    "test": "tape test/*.js | tap-spec"
   },
   "bin": {
     "aperture": "./aperture.js"
@@ -32,8 +32,8 @@
   "devDependencies": {
     "directory-copy": "~0.1.0",
     "quick-tmp": "0.0.0",
-    "tape": "~2.4.0",
-    "faucet": "0.0.0"
+    "tap-spec": "^0.2.0",
+    "tape": "~2.4.0"
   },
   "directories": {
     "test": "test"
