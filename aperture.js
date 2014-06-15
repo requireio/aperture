@@ -178,4 +178,13 @@ function defineCommands() {
   commands.config = function(root, config, events, done) {
     console.log(JSON.stringify(config, null, 2))
   }
+
+  commands.expand = function(root, config, events, done) {
+    require('./commands/expand')(
+        root
+      , config
+      , events
+      , done
+    )
+  }
 }

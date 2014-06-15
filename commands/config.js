@@ -10,6 +10,7 @@
 // missing, this will pass back an error.
 
 var resolve = require('path').resolve
+var dirname = require('path').dirname
 var findup  = require('findup')
 var cache   = {}
 
@@ -40,6 +41,9 @@ function config(directory, done) {
 
     cache[root] = pkg
     cache[directory] = pkg
+
+    pkg.pkgPath = pkgPath
+    pkg.pkgDir = dirname(pkgPath)
 
     done(null, pkg, root)
   }

@@ -20,6 +20,7 @@ Commands:
   bulk     Runs a shell command from each linked module.
   install  Intelligently install your node dependencies for local development.
   config   Print out the current config being used.
+  expand   Expand any globs present in `aperture.sources`.
   purge    Permanently removes any module duplicates which should
            be linked in the tree.
 
@@ -136,6 +137,40 @@ directory you should make sure all your changes have been checked in properly.
 
 After that, it should be set up, and you just need to run `aperture link`
 every time a new dependency has been added.
+
+### aperture expand ###
+
+Glob patterns work well for early development, but once a project starts to
+solidify it can be useful to return to explicit dependencies, much like
+the `dependencies` field is always explicit.
+
+When you're ready, simply run `aperture expand` to convert your glob patterns
+into explicit module paths. As an example, the following:
+
+``` json
+{
+  "name": "my-app",
+  "aperture": {
+    "sources": ["utils-*/*"]
+  }
+}
+```
+
+Might become something like this:
+
+``` json
+{
+  "name": "my-app",
+  "aperture": {
+    "sources": [
+      "utils-1/module-a",
+      "utils-1/module-c",
+      "utils-2/module-b",
+      "utils-2/module-d"
+    ]
+  }
+}
+```
 
 ### aperture list ###
 
