@@ -10,6 +10,9 @@
     "aperture": "./aperture.js"
   },
   "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughsk.io/)",
+  "contributors": [
+    "Tim Oxley"
+  ],
   "dependencies": {
     "flatten": "0.0.1",
     "once": "~1.3.0",
