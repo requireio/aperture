@@ -37,7 +37,9 @@ function list(root, config, done) {
       return fs.existsSync(
         resolve(directory, 'package.json')
       )
-    }).map(function(directory) {
+    })
+
+    modules = uniq(modules).map(function(directory) {
       var pkgFile = resolve(directory, 'package.json')
 
       var pkg = require(pkgFile)
