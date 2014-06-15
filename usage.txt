@@ -9,5 +9,6 @@ Commands:
   bulk     Runs a shell command from each linked module.
   install  Intelligently install your node dependencies for local development.
   config   Print out the current config being used.
+  expand   Expand any globs present in `aperture.sources`.
   purge    Permanently removes any module duplicates which should
            be linked in the tree.
