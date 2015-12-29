@@ -1,4 +1,4 @@
-# aperture #
+# aperture  [![deprecated](https://img.shields.io/badge/stability-deprecated-red.svg?style=flat-square)](https://nodejs.org/api/documentation.html#documentation_stability_index)
 
 Command-line tool to help with managing largeish amounts of local dependencies
 in `node_modules` for a single project.
